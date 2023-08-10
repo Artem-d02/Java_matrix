@@ -54,4 +54,12 @@ public class SquareMatrix<T extends Number> {
     public int getSize() {
         return size;
     }
+
+    public List<T> getColumn(int index) throws IndexOutOfBoundsException {
+        return matrix.getColumn(index);
+    }
+
+    public void setColumn(int index, @NotNull List<T> newColumn) throws IndexOutOfBoundsException {
+        matrix.setColumn(index, newColumn);
+    }
 }

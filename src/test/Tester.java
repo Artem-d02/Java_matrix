@@ -7,7 +7,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Tester {
+    private static void printTitle(String message) {
+        System.out.println();
+        Runnable printStars = () -> {
+            for (int i = 0; i < 50; i++) {
+                System.out.print("*");
+            }
+        };
+        printStars.run();
+        System.out.println("\n" + message);
+        printStars.run();
+        System.out.print("\n");
+    }
     public static boolean matrixTest() {
+        printTitle("Matrix tests");
         //  Simple test
         Matrix<Float> myMat = new Matrix<>(3, 2);
         myMat.setRaw(0, Arrays.asList(1.0f, 2.0f, 3.0f));
@@ -36,9 +49,19 @@ public class Tester {
         System.out.println("Matrix from list:");
         listMat.print(System.out);
 
+        //  column getter test
+        System.out.println("0-column of myMat:");
+        System.out.println(myMat.getColumn(0));
+
+        //  column setter test
+        myMat.setColumn(1, Arrays.asList(-18f, -22f));
+        System.out.println("myMat:");
+        myMat.print(System.out);
+
         return true;
     }
     public static boolean squareMatrixTest() {
+        printTitle("Square matrix tests");
         //  list initialization test
         SquareMatrix<Float> listMat = new SquareMatrix<>(
                 Arrays.asList(
