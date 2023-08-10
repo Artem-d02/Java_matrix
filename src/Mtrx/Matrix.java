@@ -1,6 +1,9 @@
 package Mtrx;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class Matrix<T extends Number> {
     private ArrayList<ArrayList<T>> matrix;
@@ -14,10 +17,20 @@ public class Matrix<T extends Number> {
             matrix.add(rawIndex, new ArrayList<>(sizeX));
         }
     }
-    public Matrix(Matrix<T> anotherMat) {
+    public Matrix(final @NotNull List<List<T>> inputData) throws IllegalArgumentException {
+        this(inputData.size(), inputData.get(0).size());    //  sized by first raw
+        int rawIndex = 0;
+        for (List<T> raw : inputData) {
+            if (raw.size() != sizeX)
+                throw new IllegalArgumentException("Fatal error: the sizes of raws in Matrix constructor are not equal");
+            setRaw(rawIndex++, raw);
+        }
+    }
+    public Matrix(@NotNull Matrix<T> anotherMat) {
         this(anotherMat.sizeX, anotherMat.sizeY);
         for (int yIndex = 0; yIndex < sizeY; yIndex++) {
-            matrix.set(yIndex, (ArrayList<T>) anotherMat.getRaw(yIndex).clone());
+            ArrayList<T> raw = new ArrayList<>(anotherMat.getRaw(yIndex));
+            matrix.set(yIndex, raw);
         }
     }
     @Override
@@ -37,12 +50,12 @@ public class Matrix<T extends Number> {
     public void set(final int x, final int y, final T value) throws IndexOutOfBoundsException {
         matrix.get(y).set(x, value);
     }
-    public void setRaw(final int index, final ArrayList<T> newRaw) throws IllegalStateException {
+    public void setRaw(final int index, final @NotNull List<T> newRaw) throws IllegalStateException {
         if (newRaw.size() != sizeX)
             throw new IllegalArgumentException("Fatal error: illegal size of raw");
-        matrix.set(index, newRaw);
+        matrix.set(index, new ArrayList<>(newRaw));
     }
-    public ArrayList<T> getRaw(final int index) throws IllegalStateException {
+    public List<T> getRaw(final int index) throws IllegalStateException {
         if (index >= sizeY)
             throw new IllegalArgumentException("Fatal error: illegal size of raw");
         return matrix.get(index);
