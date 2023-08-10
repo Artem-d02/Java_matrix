@@ -9,16 +9,22 @@ public class Matrix<T extends Number> {
     private ArrayList<ArrayList<T>> matrix;
     private int sizeX;
     private int sizeY;
-    public Matrix(final int sizeX, final int sizeY) {
+    private T defaultValue;
+    public Matrix(final int sizeX, final int sizeY, final T defaultValue) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
+        this.defaultValue = defaultValue;
         matrix = new ArrayList<>(sizeY);
         for (int rawIndex = 0; rawIndex < sizeY; rawIndex++) {
-            matrix.add(rawIndex, new ArrayList<>(sizeX));
+            ArrayList<T> raw = new ArrayList<>(sizeX);
+            for (int colIndex = 0; colIndex < sizeX; colIndex++) {
+                raw.add(defaultValue);
+            }
+            matrix.add(rawIndex, raw);
         }
     }
     public Matrix(final @NotNull List<List<T>> inputData) throws IllegalArgumentException {
-        this(inputData.size(), inputData.get(0).size());    //  sized by first raw
+        this(inputData.size(), inputData.get(0).size(), inputData.get(0).get(0));    //  sized by first raw, defaultValue by first elem
         int rawIndex = 0;
         for (List<T> raw : inputData) {
             if (raw.size() != sizeX)
@@ -27,7 +33,7 @@ public class Matrix<T extends Number> {
         }
     }
     public Matrix(@NotNull Matrix<T> anotherMat) {
-        this(anotherMat.sizeX, anotherMat.sizeY);
+        this(anotherMat.sizeX, anotherMat.sizeY, anotherMat.defaultValue);
         for (int yIndex = 0; yIndex < sizeY; yIndex++) {
             ArrayList<T> raw = new ArrayList<>(anotherMat.getRaw(yIndex));
             matrix.set(yIndex, raw);
@@ -80,5 +86,8 @@ public class Matrix<T extends Number> {
         for (ArrayList<T> raw : matrix) {
             stream.println(raw);
         }
+    }
+    public T getDefaultValue() {
+        return defaultValue;
     }
 }

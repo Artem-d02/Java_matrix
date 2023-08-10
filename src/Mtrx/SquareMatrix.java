@@ -9,9 +9,9 @@ import java.util.List;
 public class SquareMatrix<T extends Number> {
     private Matrix<T> matrix;
     private int size;
-    public SquareMatrix(final int size) {
+    public SquareMatrix(final int size, final T defaultValue) {
         this.size = size;
-        matrix = new Matrix<>(size, size);
+        matrix = new Matrix<>(size, size, defaultValue);
     }
     public SquareMatrix(final @NotNull List<List<T>> inputData) throws IllegalArgumentException {
         size = inputData.size();
@@ -21,7 +21,7 @@ public class SquareMatrix<T extends Number> {
         matrix = new Matrix<>(inputData);
     }
     public SquareMatrix(@NotNull SquareMatrix<T> anotherMat) {
-        this(anotherMat.size);
+        this(anotherMat.size, anotherMat.getDefaultValue());
         for (int yIndex = 0; yIndex < size; yIndex++) {
             setRaw(yIndex, anotherMat.getRaw(yIndex));
         }
@@ -61,5 +61,9 @@ public class SquareMatrix<T extends Number> {
 
     public void setColumn(int index, @NotNull List<T> newColumn) throws IndexOutOfBoundsException {
         matrix.setColumn(index, newColumn);
+    }
+
+    public T getDefaultValue() {
+        return matrix.getDefaultValue();
     }
 }

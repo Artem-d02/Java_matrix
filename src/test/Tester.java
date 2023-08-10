@@ -22,7 +22,7 @@ public class Tester {
     public static boolean matrixTest() {
         printTitle("Matrix tests");
         //  Simple test
-        Matrix<Float> myMat = new Matrix<>(3, 2);
+        Matrix<Float> myMat = new Matrix<>(3, 2, 0f);
         myMat.setRaw(0, Arrays.asList(1.0f, 2.0f, 3.0f));
         myMat.setRaw(1, Arrays.asList(3.0f, 4.0f, 5.0f));
         myMat.set(0, 1, 55.0f);
