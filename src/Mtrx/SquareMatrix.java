@@ -50,4 +50,8 @@ public class SquareMatrix<T extends Number> {
     public void print(PrintStream stream) {
         matrix.print(stream);
     }
+
+    public int getSize() {
+        return size;
+    }
 }
