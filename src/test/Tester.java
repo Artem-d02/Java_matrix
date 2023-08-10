@@ -58,6 +58,12 @@ public class Tester {
         System.out.println("myMat:");
         myMat.print(System.out);
 
+        //  empty matrix test
+        Matrix<Float> emptyMat = new Matrix<>(3, 4, 0f);
+        emptyMat.set(2, 1, 55.0f);
+        System.out.println("emptyMat:");
+        emptyMat.print(System.out);
+
         return true;
     }
     public static boolean squareMatrixTest() {
