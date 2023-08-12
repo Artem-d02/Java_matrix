@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Matrix<T extends Number> {
     private ArrayList<ArrayList<T>> matrix;
@@ -89,5 +90,18 @@ public class Matrix<T extends Number> {
     }
     public T getDefaultValue() {
         return defaultValue;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Matrix<?> matrix1 = (Matrix<?>) o;
+        return sizeX == matrix1.sizeX && sizeY == matrix1.sizeY && Objects.equals(matrix, matrix1.matrix) && Objects.equals(defaultValue, matrix1.defaultValue);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(matrix, sizeX, sizeY, defaultValue);
     }
 }
