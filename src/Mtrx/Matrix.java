@@ -17,27 +17,27 @@ public class Matrix<T extends Number> {
         this.defaultValue = defaultValue;
         matrix = new ArrayList<>(sizeY);
         for (int rawIndex = 0; rawIndex < sizeY; rawIndex++) {
-            ArrayList<T> raw = new ArrayList<>(sizeX);
+            ArrayList<T> row = new ArrayList<>(sizeX);
             for (int colIndex = 0; colIndex < sizeX; colIndex++) {
-                raw.add(defaultValue);
+                row.add(defaultValue);
             }
-            matrix.add(rawIndex, raw);
+            matrix.add(rawIndex, row);
         }
     }
     public Matrix(final @NotNull List<List<T>> inputData) throws IllegalArgumentException {
         this(inputData.size(), inputData.get(0).size(), inputData.get(0).get(0));    //  sized by first raw, defaultValue by first elem
         int rawIndex = 0;
-        for (List<T> raw : inputData) {
-            if (raw.size() != sizeX)
+        for (List<T> row : inputData) {
+            if (row.size() != sizeX)
                 throw new IllegalArgumentException("Fatal error: the sizes of raws in Matrix constructor are not equal");
-            setRaw(rawIndex++, raw);
+            setRow(rawIndex++, row);
         }
     }
     public Matrix(@NotNull Matrix<T> anotherMat) {
         this(anotherMat.sizeX, anotherMat.sizeY, anotherMat.defaultValue);
         for (int yIndex = 0; yIndex < sizeY; yIndex++) {
-            ArrayList<T> raw = new ArrayList<>(anotherMat.getRaw(yIndex));
-            matrix.set(yIndex, raw);
+            ArrayList<T> row = new ArrayList<>(anotherMat.getRow(yIndex));
+            matrix.set(yIndex, row);
         }
     }
     @Override
@@ -57,12 +57,12 @@ public class Matrix<T extends Number> {
     public void set(final int x, final int y, final T value) throws IndexOutOfBoundsException {
         matrix.get(y).set(x, value);
     }
-    public List<T> getRaw(final int index) throws IndexOutOfBoundsException {
+    public List<T> getRow(final int index) throws IndexOutOfBoundsException {
         if (index >= sizeY)
             throw new IndexOutOfBoundsException("Fatal error: illegal index of raw");
         return matrix.get(index);
     }
-    public void setRaw(final int index, final @NotNull List<T> newRaw) throws IndexOutOfBoundsException {
+    public void setRow(final int index, final @NotNull List<T> newRaw) throws IndexOutOfBoundsException {
         if (newRaw.size() != sizeX)
             throw new IndexOutOfBoundsException("Fatal error: illegal size of raw");
         matrix.set(index, new ArrayList<>(newRaw));
@@ -84,8 +84,8 @@ public class Matrix<T extends Number> {
         }
     }
     public void print(java.io.PrintStream stream) {
-        for (ArrayList<T> raw : matrix) {
-            stream.println(raw);
+        for (ArrayList<T> row : matrix) {
+            stream.println(row);
         }
     }
     public T getDefaultValue() {

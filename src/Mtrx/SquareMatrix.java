@@ -3,7 +3,6 @@ package Mtrx;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,7 +23,7 @@ public class SquareMatrix<T extends Number> {
     public SquareMatrix(@NotNull SquareMatrix<T> anotherMat) {
         this(anotherMat.size, anotherMat.getDefaultValue());
         for (int yIndex = 0; yIndex < size; yIndex++) {
-            setRaw(yIndex, anotherMat.getRaw(yIndex));
+            setRow(yIndex, anotherMat.getRow(yIndex));
         }
     }
     @Override
@@ -40,12 +39,12 @@ public class SquareMatrix<T extends Number> {
         matrix.set(x, y, value);
     }
 
-    public void setRaw(int index, final @NotNull List<T> newRaw) throws IllegalStateException {
-        matrix.setRaw(index, newRaw);
+    public void setRow(int index, final @NotNull List<T> newRow) throws IllegalStateException {
+        matrix.setRow(index, newRow);
     }
 
-    public List<T> getRaw(int index) throws IllegalStateException {
-        return matrix.getRaw(index);
+    public List<T> getRow(int index) throws IllegalStateException {
+        return matrix.getRow(index);
     }
 
     public void print(PrintStream stream) {
